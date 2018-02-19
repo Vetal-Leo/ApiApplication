@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html ng-app="apiApplication">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Items</title>
+    <script src="/angular/angular.js"></script>
+    <script src="/jquery/jquery-2.2.4.js"></script>
+    <link href="/bootstrap/bootstrap-3.3.6/dist/css/bootstrap.css" rel="stylesheet" />
+    <script src="/js/items.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      
+      
+    </script>
+</head>
+<body ng-controller="itemsCtrl">
+    <div class="container text-center table-responsive">
+        <br /><br />
+        <h1>Items</h1>
+        <br /><br />
+        <div class="row">
+            <form name="itemForm">
+                <input type="hidden" name="id" value="0" />
+                <div class="col-md-4">
+                    <input type="text" placeholder=" Add a new Name" style="width:280px" name="itemname">
+                </div>
+                <div class="col-md-4">
+                    <input type="text" placeholder=" Add a new Type" style="width:280px" name="itemtype">
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-sm btn-primary" style="width:100px; height:28px">add</button>
+                </div>
+            </form>
+        </div>
+        <br /><br />
+        <table class="table table-condensed table-striped table-bordered itemtable">
+            <thead><tr><th>Item Name</th><th>Item Type</th><th> </th></tr></thead>
+            <tbody></tbody>
+        </table>
+        <br /><br />
+        <a href="Statistic.html" class="pull-right" style="padding-right: 100px">Statistic</a>
+    </div>
+</body>
+</html>

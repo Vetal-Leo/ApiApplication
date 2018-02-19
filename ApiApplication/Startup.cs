@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using ApiApplication.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.FileProviders;
 
 namespace ApiApplication
 {
@@ -23,6 +21,8 @@ namespace ApiApplication
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            string connection = "Data Source=" + Environment.CurrentDirectory + "\\SQLite\\apitask.db";
+            services.AddDbContext<ItemsContext>(options => options.UseSqlite(connection));
             services.AddMvc();
         }
 
@@ -34,6 +34,12 @@ namespace ApiApplication
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseFileServer(new FileServerOptions
+            {
+                FileProvider = new PhysicalFileProvider(Environment.CurrentDirectory + "\\Views")
+            });
+            // app.UseDefaultFiles()**;            
+            app.UseStaticFiles();
             app.UseMvc();
         }
     }
