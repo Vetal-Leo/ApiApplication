@@ -26,9 +26,8 @@ namespace ApiApplication.Controllers
         private List<Statistic> GetStatistic()
         {
             var result = new List<Statistic>();
-            var typelist = _context.Items.Select(t => t.ItemType).Distinct().ToList();
             var items = _context.Items.ToList();
-            if (typelist == null || items == null)
+            if (items == null)
             {
                 result[0].ItemType = "No data in the database.";
                 result[0].Count = 0;
@@ -37,23 +36,41 @@ namespace ApiApplication.Controllers
             else
             {
                 Statistic statistic;
-                foreach (string type in typelist)
+                foreach (var item in items)
                 {
                     statistic = new Statistic
                     {
-                        ItemType = type,
-                        Count = GetElementAmount(type, items)
+                        ItemType = item.ItemType,
+                        Count = GetElementAmount(item.ItemType, items),
+                        Visibility = MaxVisibilityForThisType(item.ItemType, result) + 1
                     };
-                    result.Add(statistic);
+
+                    if (statistic.Visibility <= 9) result.Add(statistic);
                 }
 
                 return result;
             }
+
         }
 
         private static int GetElementAmount(string type, List<Item> items)
         {
             return items.Where(t => t.ItemType == type).Count();
         }
+
+        private int MaxVisibilityForThisType(string type, List<Statistic> templist)
+        {
+            int maxiAmount = 0;
+            foreach (var element in templist)
+            {
+                if (element.ItemType == type && maxiAmount < element.Visibility)
+                {
+                    maxiAmount = element.Visibility;
+                }
+            }
+
+            return maxiAmount;
+        }
+
     }
 }

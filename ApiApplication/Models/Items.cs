@@ -13,6 +13,7 @@ namespace ApiApplication.Models
     {
         public string ItemType { get; set; }
         public int Count { get; set; }
+        public int Visibility { get; set; }
     }
 
     public class ItemsContext : DbContext
