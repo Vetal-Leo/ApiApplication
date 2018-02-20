@@ -22,6 +22,11 @@ app.controller('itemsCtrl', function ($scope, $http) {
 
     //Adding item
     function CreateItem(itemname, itemtype) {
+        if (itemname === "" || itemname === undefined ||
+            itemtype === "" || itemtype === undefined) {
+            $scope.error = "Fields must not be empty!";
+            return;
+        }
         $http({
             method: 'POST',
             url: '/api/items',
@@ -34,6 +39,7 @@ app.controller('itemsCtrl', function ($scope, $http) {
             item = response.data;
             reset();
             $(".itemtable").append(row(item));
+            }, function error(response) {
         });
     }
 
