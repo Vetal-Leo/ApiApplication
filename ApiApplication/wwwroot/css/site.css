@@ -1,0 +1,22 @@
+﻿body {
+}
+
+#itemsControls {
+     margin: 1em;
+}
+
+#itemsControls ul {
+    display:inline;
+    padding-left:0.5em;
+    
+}
+
+    #itemsControls li {
+        display: inline;
+        padding: 0 0.5em;
+     
+    }
+
+a.pages {
+    text-decoration: underline;
+}

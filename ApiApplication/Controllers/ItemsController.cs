@@ -47,34 +47,34 @@ namespace ApiApplication.Controllers
 
         // PUT api/items/5
         [HttpPut]
-        public IActionResult Put([FromBody]Item item)
+        public IEnumerable<Item> Put([FromBody]Item item)
         {
             if (item == null)
             {
-                return BadRequest();
+                return new List<Item>(){ new Item() {ItemName = "NotFound."}};
             }
             if (!_context.Items.Any(x => x.Id == item.Id))
             {
-                return NotFound();
+                return new List<Item>() { new Item() { ItemName = "NotFound."}};
             }
             _context.Update(item);
             _context.SaveChanges();
 
-            return Ok(item);
+            return _context.Items.ToList();
         }
 
         // DELETE api/items/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IEnumerable<Item> Delete(int id)
         {
             Item item = _context.Items.FirstOrDefault(x => x.Id == id);
             if (item == null)
             {
-                return NotFound();
+                return new List<Item>() { new Item() { ItemName = "NotFound." } };
             }
             _context.Items.Remove(item);
             _context.SaveChanges();
-            return Ok(item);
+            return _context.Items.ToList();
         }
     }
 }

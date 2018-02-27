@@ -1,24 +1,30 @@
 ﻿
 var app = angular.module('apiApplication', []);
 
-app.controller('itemsCtrl', function ($scope, $http) {
+//There are rows of the table.
+var rows;
 
+app.controller('itemsCtrl', function ($scope, $http) {
     //Getting all items.
-    function GetItems() {
+ function GetItems() {
         $http({
             method: 'GET',
             url: '/api/items',
             contentType: "application/json",
         }).then(function success(response) {
             items = response.data;
-            var rows = "";
+            rows = "";
+            var count = 0;
             $.each(items, function (index, item) {
                 //adding items to a table.
                 rows += row(item);
+                count++;
             })
             $(".itemtable").append(rows);
+           Pagination(4, "#itemscontent", "#itemsControls","fist");
         });
     }
+    
 
     //Adding item
     function CreateItem(itemname, itemtype) {
@@ -38,11 +44,14 @@ app.controller('itemsCtrl', function ($scope, $http) {
         }).then(function success(response) {
             item = response.data;
             reset();
-            $(".itemtable").append(row(item));
+            rows += row(item);
+            $(".itemtable tbody > tr").remove();
+            $(".itemtable").append(rows);       
+            Pagination(4, "#itemscontent", "#itemsControls", "last");
             }, function error(response) {
         });
     }
-
+  
     //Getting one item from the database.
     function GetItem(id) {
         $http({
@@ -60,6 +69,11 @@ app.controller('itemsCtrl', function ($scope, $http) {
 
     //Changes items.
     function EditItem(itemid, itemname, itemtype) {
+        if (itemname === "" || itemname === undefined ||
+            itemtype === "" || itemtype === undefined) {
+            $scope.error = "Fields must not be empty!";
+            return;
+        }
         $http({
             method: 'Put',
             url: '/api/items',
@@ -70,9 +84,17 @@ app.controller('itemsCtrl', function ($scope, $http) {
                 ItemType: itemtype
             }),
         }).then(function success(response) {
-            item = response.data;
-            reset();
-            $("tr[data-rowid='" + item.id + "']").replaceWith(row(item));
+            items = response.data;
+            rows = "";
+            var count = 0;
+            $.each(items, function (index, item) {
+                //adding items to a table.
+                rows += row(item);
+                count++;
+            })
+            $(".itemtable tbody > tr").remove();
+            $(".itemtable").append(rows);
+            Pagination(4, "#itemscontent", "#itemsControls", "current");
         });
     }
 
@@ -83,8 +105,17 @@ app.controller('itemsCtrl', function ($scope, $http) {
             url: '/api/items/' + id,
             contentType: "application/json",
         }).then(function success(response) {
-            item = response.data;
-            $("tr[data-rowid='" + item.id + "']").remove();
+            items = response.data;
+            rows = "";
+            var count = 0;
+            $.each(items, function (index, item) {
+                //adding items to a table.
+                rows += row(item);
+                count++;
+            })
+            $(".itemtable tbody > tr").remove();
+            $(".itemtable").append(rows);
+            Pagination(4, "#itemscontent", "#itemsControls", "current");
         });
     }
 
@@ -131,4 +162,8 @@ app.controller('itemsCtrl', function ($scope, $http) {
     //Getting items.
     GetItems()
 });
+
+
+
+
 
