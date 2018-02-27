@@ -2,8 +2,8 @@
 //This is pagination of the pages.
 var currentPage;
 function Pagination(amountperpage, pagingcontainer, pagingcontrols, index) {
-    //It is number of items per page.
-   
+
+    //It is number of items per page. 
     elementsPerPage = amountperpage;
     pagingContainer = $(pagingcontainer);
     elements = $('tr', pagingContainer); 

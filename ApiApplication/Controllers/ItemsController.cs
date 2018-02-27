@@ -51,11 +51,12 @@ namespace ApiApplication.Controllers
         {
             if (item == null)
             {
-                return new List<Item>(){ new Item() {ItemName = "NotFound."}};
+                return new List<Item> { new Item() { ItemName = "NotFound." } };
             }
             if (!_context.Items.Any(x => x.Id == item.Id))
             {
-                return new List<Item>() { new Item() { ItemName = "NotFound."}};
+
+                return new List<Item> { new Item() { ItemName = "NotFound." } };
             }
             _context.Update(item);
             _context.SaveChanges();
@@ -70,7 +71,7 @@ namespace ApiApplication.Controllers
             Item item = _context.Items.FirstOrDefault(x => x.Id == id);
             if (item == null)
             {
-                return new List<Item>() { new Item() { ItemName = "NotFound." } };
+                return new List<Item> { new Item() { ItemName = "NotFound." } };
             }
             _context.Items.Remove(item);
             _context.SaveChanges();

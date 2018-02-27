@@ -1,20 +1,19 @@
-﻿body {
+﻿
+body {
 }
 
-#itemsControls {
-     margin: 1em;
+#itemsControls, #statisticControls {
+    margin: 1em;
 }
 
-#itemsControls ul {
-    display:inline;
-    padding-left:0.5em;
-    
-}
+    #itemsControls ul, #statisticControls ul {
+        display: inline;
+        padding-left: 0.5em;
+    }
 
-    #itemsControls li {
+    #itemsControls li, #statisticControls li {
         display: inline;
         padding: 0 0.5em;
-     
     }
 
 a.pages {

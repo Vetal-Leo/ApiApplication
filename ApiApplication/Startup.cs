@@ -38,7 +38,7 @@ namespace ApiApplication
             {
                 FileProvider = new PhysicalFileProvider(Environment.CurrentDirectory + "\\Views")
             });
-            // app.UseDefaultFiles()**;            
+            
             app.UseStaticFiles();
             app.UseMvc();
         }
